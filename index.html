@@ -31,59 +31,25 @@
         input:focus, select:focus { border-color: var(--primary); }
         button.btn { background: var(--primary); color: white; border: none; padding: 0.75rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; width: 100%; font-size: 0.95rem; }
         button.btn:hover { background: var(--primary-hover); }
-        .file-item {     display: flex;     justify-content: space-between;     align-items: center;     gap: 1rem; /* Prevents text from colliding with the download button */    padding: 1rem;     border: 1px solid var(--border);     border-radius: 10px;     margin-bottom: 0.75rem;     background: var(--card-bg);     transition: transform 0.2s; }}
+        
+        /* Beautiful File Items with Ellipsis text fixing */
+        .file-item { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 0.75rem; background: var(--card-bg); transition: transform 0.2s; }
         .file-item:hover { transform: translateY(-1px); }
-        .file-info {     display: flex;     flex-direction: column;     gap: 0.25rem;     min-width: 0; /* Crucial fix: allows flex children to shrink below content size */}
-        .file-name {     font-weight: 600;     font-size: 0.95rem;     color: var(--text);     white-space: nowrap;     overflow: hidden;     text-overflow: ellipsis; /* Adds beautiful "..." at the end of long names */}
+        .file-info { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+        .file-name { font-weight: 600; font-size: 0.95rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .file-meta { font-size: 0.8rem; color: var(--text-light); }
-        .download-btn { background: #f1f5f9; color: var(--text); border: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+        .download-btn { background: #f1f5f9; color: var(--text); border: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; text-decoration: none; transition: background 0.2s; flex-shrink: 0; }
         .download-btn:hover { background: #e2e8f0; }
         .status { font-size: 0.9rem; text-align: center; margin-top: 0.75rem; font-weight: 500; }
         .status.error { color: #ef4444; }
         .status.success { color: #10b981; }
-        /* ... your existing styles ... */
-        
-        .status.success { color: #10b981; }
 
-        /* PASTE THE NEW UPLOAD ZONE STYLES HERE */
-        .file-drop-zone {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 2rem 1rem;
-            border: 2px dashed var(--border);
-            border-radius: 10px;
-            background: #fdfdfd;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-        }
-
-        .file-drop-zone:hover, .file-drop-zone.dragover {
-            border-color: var(--primary);
-            background: #f5f3ff;
-        }
-
-        .upload-icon {
-            color: var(--text-light);
-            transition: color 0.2s;
-        }
-
-        .file-drop-zone:hover .upload-icon, .file-drop-zone.dragover .upload-icon {
-            color: var(--primary);
-        }
-
-        #file-label-text {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            font-weight: 500;
-            word-break: break-all;
-        }
-    </script>
-</body>
-</html>
+        /* Custom File Upload Box Styling */
+        .file-drop-zone { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 2rem 1rem; border: 2px dashed var(--border); border-radius: 10px; background: #fdfdfd; cursor: pointer; transition: all 0.2s ease; text-align: center; }
+        .file-drop-zone:hover, .file-drop-zone.dragover { border-color: var(--primary); background: #f5f3ff; }
+        .upload-icon { color: var(--text-light); transition: color 0.2s; }
+        .file-drop-zone:hover .upload-icon, .file-drop-zone.dragover .upload-icon { color: var(--primary); }
+        #file-label-text { font-size: 0.9rem; color: var(--text-light); font-weight: 500; word-break: break-all; }
     </style>
 </head>
 <body>
@@ -104,44 +70,32 @@
             </div>
         </div>
 
-<div id="teacher-view" class="hidden card">
-    <form id="upload-form">
-        <div class="form-group">
-            <label for="teacher-password">Access Code</label>
-            <input type="password" id="teacher-password" required placeholder="Enter upload password">
-        </div>
+        <div id="teacher-view" class="hidden card">
+            <form id="upload-form">
+                <div class="form-group">
+                    <label for="teacher-password">Access Code</label>
+                    <input type="password" id="teacher-password" required placeholder="Enter upload password">
+                </div>
+                
+                <div class="form-group">
+                    <label>Select File (Max 25MB)</label>
+                    <label for="file-input" class="file-drop-zone" id="drop-zone">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="upload-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        <span id="file-label-text">Tap to select or drag file here</span>
+                        <input type="file" id="file-input" required style="display: none;">
+                    </label>
+                </div>
 
-        <div class="form-group">
-            <label>Select File (Max 25MB)</label>
-            <label for="file-input" class="file-drop-zone" id="drop-zone">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="upload-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                <span id="file-label-text">Tap to select or drag file here</span>
-                <input type="file" id="file-input" required style="display: none;">
-            </label>
-        </div>
-
-        <div class="form-group">
-            <label for="ttl-input">Visibility Expiration</label>
-            <select id="ttl-input">
-                <option value="1800">30 Minutes</option>
-                <option value="3600" selected>1 Hour</option>
-                <option value="14400">4 Hours</option>
-                <option value="86400">24 Hours</option>
-            </select>
-        </div>
-
-        <button type="submit" class="btn">Upload & Publish</button>
-        <div id="upload-status" class="status"></div>
-    </form>
-</div>
-               <div class="form-group">
-    <label>Select File (Max 25MB)</label>
-    <label for="file-input" class="file-drop-zone" id="drop-zone">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="upload-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        <span id="file-label-text">Tap to select or drag file here</span>
-        <input type="file" id="file-input" required style="display: none;">
-    </label>
-</div>
+                <div class="form-group">
+                    <label for="ttl-input">Visibility Expiration</label>
+                    <select id="ttl-input">
+                        <option value="1800">30 Minutes</option>
+                        <option value="3600" selected>1 Hour</option>
+                        <option value="14400">4 Hours</option>
+                        <option value="86400">24 Hours</option>
+                    </select>
+                </div>
+                
                 <button type="submit" class="btn">Upload & Publish</button>
                 <div id="upload-status" class="status"></div>
             </form>
@@ -153,6 +107,9 @@
         const tTab = document.getElementById('teacher-tab');
         const sView = document.getElementById('student-view');
         const tView = document.getElementById('teacher-view');
+        const fileInput = document.getElementById('file-input');
+        const dropZone = document.getElementById('drop-zone');
+        const fileLabelText = document.getElementById('file-label-text');
 
         sTab.addEventListener('click', () => {
             sTab.classList.add('active'); tTab.classList.remove('active');
@@ -194,14 +151,14 @@
             }
         }
 
-       document.getElementById('upload-form').addEventListener('submit', async (e) => {
+        document.getElementById('upload-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const status = document.getElementById('upload-status');
             status.className = 'status'; status.innerText = 'Publishing to web...';
 
             const formData = new FormData();
             formData.append('password', document.getElementById('teacher-password').value);
-            formData.append('file', document.getElementById('file-input').files[0]);
+            formData.append('file', fileInput.files[0]);
             formData.append('ttl', document.getElementById('ttl-input').value);
 
             try {
@@ -209,6 +166,8 @@
                 if (res.ok) {
                     status.classList.add('success'); status.innerText = 'Published successfully!';
                     document.getElementById('upload-form').reset();
+                    fileLabelText.innerText = 'Tap to select or drag file here';
+                    fileLabelText.style.color = 'var(--text-light)';
                 } else {
                     status.classList.add('error'); status.innerText = await res.text() || 'Error occurred.';
                 }
@@ -217,16 +176,7 @@
             }
         });
 
-        function escapeHtml(str) {
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        }
-
-        loadFiles();
-        const fileInput = document.getElementById('file-input');
-        const dropZone = document.getElementById('drop-zone');
-        const fileLabelText = document.getElementById('file-label-text');
-
-        fileInput.addEventListener('change', (e) => {
+        fileInput.addEventListener('change', () => {
             if (fileInput.files.length > 0) {
                 fileLabelText.innerText = `Selected: ${fileInput.files[0].name}`;
                 fileLabelText.style.color = 'var(--text)';
@@ -249,6 +199,12 @@
                 dropZone.classList.remove('dragover');
             }, false);
         });
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        loadFiles();
     </script>
 </body>
 </html>
