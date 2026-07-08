@@ -104,16 +104,36 @@
             </div>
         </div>
 
-        <div id="teacher-view" class="hidden card">
-            <form id="upload-form">
-                <div class="form-group">
-                    <label for="teacher-password">Access Code</label>
-                    <input type="password" id="teacher-password" required placeholder="Enter upload password">
-                </div>
-                <div class="form-group">
-                    <label for="file-input">Select File (Max 25MB)</label>
-                    <input type="file" id="file-input" required>
-                </div>
+<div id="teacher-view" class="hidden card">
+    <form id="upload-form">
+        <div class="form-group">
+            <label for="teacher-password">Access Code</label>
+            <input type="password" id="teacher-password" required placeholder="Enter upload password">
+        </div>
+
+        <div class="form-group">
+            <label>Select File (Max 25MB)</label>
+            <label for="file-input" class="file-drop-zone" id="drop-zone">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="upload-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <span id="file-label-text">Tap to select or drag file here</span>
+                <input type="file" id="file-input" required style="display: none;">
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="ttl-input">Visibility Expiration</label>
+            <select id="ttl-input">
+                <option value="1800">30 Minutes</option>
+                <option value="3600" selected>1 Hour</option>
+                <option value="14400">4 Hours</option>
+                <option value="86400">24 Hours</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn">Upload & Publish</button>
+        <div id="upload-status" class="status"></div>
+    </form>
+</div>
                <div class="form-group">
     <label>Select File (Max 25MB)</label>
     <label for="file-input" class="file-drop-zone" id="drop-zone">
