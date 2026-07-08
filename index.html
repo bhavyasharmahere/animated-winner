@@ -81,85 +81,6 @@
             font-weight: 500;
             word-break: break-all;
         }
-    </style> ```
-
----
-
-### 2. Where to put the JavaScript Interactivity
-Scroll all the way down to the bottom of your `index.html` file. You need to do two small things inside your script block:
-
-1. Update your existing **submit form code** so it resets the box text back to normal after a successful upload.
-2. Paste the **new drag-and-drop listener logic** right before the absolute end of the script.
-
-Here is exactly how the bottom of your file should look:
-
-```javascript
-        // ... your existing code ...
-
-        document.getElementById('upload-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const status = document.getElementById('upload-status');
-            status.className = 'status'; status.innerText = 'Publishing to web...';
-
-            const formData = new FormData();
-            formData.append('password', document.getElementById('teacher-password').value);
-            formData.append('file', document.getElementById('file-input').files[0]);
-            formData.append('ttl', document.getElementById('ttl-input').value);
-
-            try {
-                const res = await fetch('/api/files', { method: 'POST', body: formData });
-                if (res.ok) {
-                    status.classList.add('success'); status.innerText = 'Published successfully!';
-                    document.getElementById('upload-form').reset();
-                    
-                    // ADD THIS LINE HERE to reset text after a successful upload
-                    document.getElementById('file-label-text').innerText = 'Tap to select or drag file here';
-                    document.getElementById('file-label-text').style.color = 'var(--text-light)';
-
-                } else {
-                    status.classList.add('error'); status.innerText = await res.text() || 'Error occurred.';
-                }
-            } catch {
-                status.classList.add('error'); status.innerText = 'Network error.';
-            }
-        });
-
-        function escapeHtml(str) {
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        }
-
-        loadFiles();
-
-        // ==========================================
-        // PASTE ALL THE NEW INTERACTIVITY CODE HERE:
-        // ==========================================
-        const fileInput = document.getElementById('file-input');
-        const dropZone = document.getElementById('drop-zone');
-        const fileLabelText = document.getElementById('file-label-text');
-
-        fileInput.addEventListener('change', (e) => {
-            if (fileInput.files.length > 0) {
-                fileLabelText.innerText = `Selected: ${fileInput.files[0].name}`;
-                fileLabelText.style.color = 'var(--text)';
-            } else {
-                fileLabelText.innerText = 'Tap to select or drag file here';
-                fileLabelText.style.color = 'var(--text-light)';
-            }
-        });
-
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                dropZone.classList.add('dragover');
-            }, false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                dropZone.classList.remove('dragover');
-            }, false);
-        });
     </script>
 </body>
 </html>
@@ -281,6 +202,33 @@ Here is exactly how the bottom of your file should look:
         }
 
         loadFiles();
+        const fileInput = document.getElementById('file-input');
+        const dropZone = document.getElementById('drop-zone');
+        const fileLabelText = document.getElementById('file-label-text');
+
+        fileInput.addEventListener('change', (e) => {
+            if (fileInput.files.length > 0) {
+                fileLabelText.innerText = `Selected: ${fileInput.files[0].name}`;
+                fileLabelText.style.color = 'var(--text)';
+            } else {
+                fileLabelText.innerText = 'Tap to select or drag file here';
+                fileLabelText.style.color = 'var(--text-light)';
+            }
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropZone.classList.add('dragover');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+            }, false);
+        });
     </script>
 </body>
 </html>
