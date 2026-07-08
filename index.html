@@ -50,10 +50,26 @@
         .upload-icon { color: var(--text-light); transition: color 0.2s; }
         .file-drop-zone:hover .upload-icon, .file-drop-zone.dragover .upload-icon { color: var(--primary); }
         #file-label-text { font-size: 0.9rem; color: var(--text-light); font-weight: 500; word-break: break-all; }
-        <footer>
-            <p>&copy; 2026 13207 Upload Hub. All rights reserved.</p>
-            <p>Developed by <a href="dev.html" class="dev-link">Bhavya Sharma</a> &lt;/&gt;</p>
-        </footer>
+       footer {
+            text-align: center;
+            margin-top: 5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        .dev-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .dev-link:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+        
     </style>
 </head>
 <body>
@@ -102,6 +118,10 @@
                 
                 <button type="submit" class="btn">Upload & Publish</button>
                 <div id="upload-status" class="status"></div>
+        <footer>
+            <p>&copy; 2026 13207 Upload Hub. All rights reserved.</p>
+            <p>Developed by <a href="dev.html" class="dev-link">Bhavya Sharma</a> &lt;/&gt;</p>
+        </footer>
             </form>
         </div>
     </div>
