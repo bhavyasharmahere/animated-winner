@@ -268,11 +268,6 @@ Here is exactly how the bottom of your file should look:
                 if (res.ok) {
                     status.classList.add('success'); status.innerText = 'Published successfully!';
                     document.getElementById('upload-form').reset();
-                    
-                    // ADD THIS LINE HERE to reset text after a successful upload
-                    document.getElementById('file-label-text').innerText = 'Tap to select or drag file here';
-                    document.getElementById('file-label-text').style.color = 'var(--text-light)';
-
                 } else {
                     status.classList.add('error'); status.innerText = await res.text() || 'Error occurred.';
                 }
@@ -286,37 +281,6 @@ Here is exactly how the bottom of your file should look:
         }
 
         loadFiles();
-
-        // ==========================================
-        // PASTE ALL THE NEW INTERACTIVITY CODE HERE:
-        // ==========================================
-        const fileInput = document.getElementById('file-input');
-        const dropZone = document.getElementById('drop-zone');
-        const fileLabelText = document.getElementById('file-label-text');
-
-        fileInput.addEventListener('change', (e) => {
-            if (fileInput.files.length > 0) {
-                fileLabelText.innerText = `Selected: ${fileInput.files[0].name}`;
-                fileLabelText.style.color = 'var(--text)';
-            } else {
-                fileLabelText.innerText = 'Tap to select or drag file here';
-                fileLabelText.style.color = 'var(--text-light)';
-            }
-        });
-
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                dropZone.classList.add('dragover');
-            }, false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                dropZone.classList.remove('dragover');
-            }, false);
-        });
     </script>
 </body>
 </html>
